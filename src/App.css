@@ -1,38 +1,79 @@
-.App {
-  text-align: center;
+body {
+  padding: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.todo-list {
+  display: flex;
+  flex-flow: wrap;
+  width: 90%;
+  margin: auto;
+  justify-content: space-between;
+  margin-top: 40px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.todo-item {
   display: flex;
   flex-direction: column;
+  width: 200px;
+  height: 250px;
+  text-align: center;
+  border-radius: none;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  border-radius: 5%;
+  background-color:rgb(245, 245, 245);
+}
+
+.urgent {
+  background-color:rgb(182, 17, 17);
+}
+
+.todo-form {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  align-items: center;
+}
+
+.todo-form input {
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.todo-form label {
+  margin-bottom: 10px;
+}
+
+.todo-form input[type= "submit"]{
+  background-color: rgb(43, 172, 43);
   color: white;
+  width: 80px;
 }
 
-.App-link {
-  color: #61dafb;
+.edit-button {
+  background-color: rgb(40, 120, 238);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.delete-button {
+  background-color: rgb(221, 34, 34);
+}
+
+.button {
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  margin: 5px;
+}
+
+.inner-todo {
+  background-color: white;
+  width: 200px;
+  height: 200px;
+  margin-left: -25px;
+  margin-top: 15px;
+  border-radius: 5%;
+  box-shadow: 0 0 30px rgb(159, 159, 159);
+}
+
+.urgent .inner-todo {
+  box-shadow:  0 0 30px rgb(92, 13, 13);
 }
