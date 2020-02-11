@@ -36,6 +36,7 @@ export default class TodoForm extends Component {
     render(){
         return (
             <form className="todo-form" onSubmit={this.handleSubmit}>
+                <h2>Add New Todo</h2>
                 <label>Title</label>
                 <input name="title" value={this.state.title} onChange={this.handleChange}/>
                 <label>Content</label>
