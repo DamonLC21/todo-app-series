@@ -1,30 +1,64 @@
 import React, {Component} from 'react';
-import TodoList from './components/TodoList'
-
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import './App.css';
-import TodoItem from './components/TodoItem';
-import TodoForm from './components/TodoForm';
 import Login from './components/Login'
+import PrivateRoute from './components/PrivateRoute'
 
 class App extends Component {
 
   state = {
-    todos: [
-      {id: 10, title: "First Todo", content:"Do some React", urgent: false},
-      {id: 20, title: "Second Todo", content:"Do some more React", urgent: true},
-      {id: 30, title: "Third Todo", content:"Do some more React", urgent: false},
-      {id: 40, title: "Fourth Todo", content:"Do some more React", urgent: true},
-    ]
+    todos: []
   }
 
   render(){
     return (
-      <div className="App">
-        {/* <Login /> */}
-        <TodoForm todoAction={this.addTodo} />
-        <TodoList todos={this.state.todos} deleteTodo={this.deleteTodo} updateTodo={this.updateTodo}/>
-      </div>
+      <Router>
+        <div className="App">
+          <Switch>
+            <PrivateRoute exact 
+              path='/' 
+              todos={this.state.todos} 
+              deleteTodo={this.deleteTodo} 
+              updateTodo={this.updateTodo} 
+              addTodo={this.addTodo} />
+            <Route path='/login' render={(props) => <Login {...props} login={this.login}/>} />
+            <Route render={() => <Redirect to='/' />} />
+          </Switch>
+        </div>
+      </Router>
     );
+  }
+
+  componentDidMount(){
+    let {token} = localStorage
+    fetch('http://localhost:3000/api/v1/profile', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => response.json())
+    .then(result => {
+      return result.user ? this.setState({todos: result.user.todos}) : null
+    })
+  }
+
+  login = (user, history) => {
+    fetch('http://localhost:3000/api/v1/login', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({user})
+    })
+      .then(response => response.json())
+      .then(({user, user: {todos}, jwt}) => {
+          localStorage.setItem('token', jwt)
+          this.setState({
+            todos
+          })
+          history.push('/')
+      })
   }
 
   addTodo = (newTodo) => {
@@ -47,6 +81,7 @@ class App extends Component {
     })
     this.setState({todos})
   }
+
   
 }
 

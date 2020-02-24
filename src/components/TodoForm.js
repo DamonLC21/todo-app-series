@@ -8,12 +8,15 @@ export default class TodoForm extends Component {
     }
 
     componentDidMount(){
-        this.setState({
-            title: this.props.title,
-            content: this.props.content,
-            id: this.props.id
-        })
+        if(this.props.id){
+            this.setState({
+                title: this.props.title,
+                content: this.props.content,
+                id: this.props.id
+            })
+        }
     }
+    
 
     handleChange = (event) => {
         const {name, value} = event.target
